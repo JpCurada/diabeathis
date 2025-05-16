@@ -13,11 +13,10 @@ import {
 } from "lucide-react";
 
 interface LoginFormProps {
-  onForgotPassword: () => void;
   onSignUp: () => void;
 }
 
-export function LoginForm({ onForgotPassword, onSignUp }: LoginFormProps) {
+export function LoginForm({ onSignUp }: LoginFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
