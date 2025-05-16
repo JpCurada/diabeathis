@@ -1,0 +1,22 @@
+vscode/
+
+# Environment variables
+*.env
+.env
+.env.*
+*/.env
+*/.env.*
+
+# Virtual environments
+.venv/
+*/virt/
+**/virt/
+virt/
+**/venv/
+venv/
+
+# Python cache
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
