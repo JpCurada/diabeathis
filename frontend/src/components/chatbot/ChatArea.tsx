@@ -5,6 +5,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import ChatMessage from "@/components/chatbot/ChatMessage";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/auth-context";
+import ThinkingProcess from "@/components/chatbot/ThinkingProcess";
 
 type Message = {
   id: string;
@@ -16,19 +17,27 @@ interface ChatAreaProps {
   messages: Message[];
   onSendMessage: (input: string) => void;
   isLoading?: boolean;
+  isThinking: boolean;
+  thinkingSteps: string[];
+  currentStep: number;
+  finalResponse: string | null;
 }
 
 export default function ChatArea({
   messages,
   onSendMessage,
   isLoading = false,
+  isThinking,
+  thinkingSteps,
+  currentStep,
+  finalResponse,
 }: ChatAreaProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [input, setInput] = useState<string>("");
   const isMobile = useIsMobile();
   const { user } = useAuth();
 
-  const displayName = user?.firstName || "User";
+  const displayName = user?.first_name || "User";
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -55,8 +64,14 @@ export default function ChatArea({
       highlight: true,
     },
     { label: "Exercise", value: "Can you suggest a workout plan for me?" },
-    { label: "Medication", value: "I keep forgetting to take my evening medication" },
-    { label: "Diet", value: "What are some healthy snack options between meals?" },
+    {
+      label: "Medication",
+      value: "I keep forgetting to take my evening medication",
+    },
+    {
+      label: "Diet",
+      value: "What are some healthy snack options between meals?",
+    },
   ];
 
   return (
@@ -69,8 +84,8 @@ export default function ChatArea({
               Welcome to Debie, {displayName}!
             </h1>
             <p className="text-[#747474] text-sm sm:text-base text-center max-w-md mb-8">
-              Ask me anything about your diabetes management or use one of the quick prompts below to get
-              started.
+              Ask me anything about your diabetes management or use one of the
+              quick prompts below to get started.
             </p>
 
             {isMobile && (
@@ -123,8 +138,14 @@ export default function ChatArea({
                   <div className="bg-white text-black border border-[#d1d1d1] shadow-sm rounded-lg rounded-bl-none px-4 py-2 max-w-[80%]">
                     <div className="flex space-x-2">
                       <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                      <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
+                      <div
+                        className="w-2 h-2 bg-blue-600 rounded-full animate-bounce"
+                        style={{ animationDelay: "0.2s" }}
+                      ></div>
+                      <div
+                        className="w-2 h-2 bg-blue-600 rounded-full animate-bounce"
+                        style={{ animationDelay: "0.4s" }}
+                      ></div>
                     </div>
                   </div>
                 </div>
@@ -137,7 +158,16 @@ export default function ChatArea({
 
       {/* Always show Chat Input at the bottom */}
       {hasMessages && (
-        <div className="p-4 w-full max-w-3xl mx-auto">
+        <div className="w-full max-w-3xl mx-auto space-y-4 p-4">
+          {(isThinking || finalResponse) && (
+            <ThinkingProcess
+              isThinking={isThinking}
+              thinkingSteps={thinkingSteps}
+              currentStep={currentStep}
+              finalResponse={finalResponse}
+            />
+          )}
+
           <ChatInput
             input={input}
             isLoading={isLoading}

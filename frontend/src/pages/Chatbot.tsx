@@ -1,7 +1,6 @@
 import { useState } from "react";
 import ChatArea from "@/components/chatbot/ChatArea";
 import { useThinkingProcess } from "@/hooks/use-thinking-process";
-import ThinkingProcess from "@/components/chatbot/ThinkingProcess";
 
 interface Message {
   id: string;
@@ -30,13 +29,13 @@ const defaultConversation: Message[] = [
 export default function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>(defaultConversation);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { 
-    isThinking, 
-    thinkingSteps, 
-    currentStep, 
-    finalResponse, 
-    startThinking, 
-    resetThinking 
+  const {
+    isThinking,
+    thinkingSteps,
+    currentStep,
+    finalResponse,
+    startThinking,
+    resetThinking,
   } = useThinkingProcess();
 
   const handleSendMessage = async (message: string) => {
@@ -48,23 +47,14 @@ export default function ChatInterface() {
 
     setMessages((prev) => [...prev, userMessage]);
     setIsLoading(true);
-    
-    // Start the thinking process with the user's message
     startThinking(message);
 
     try {
-      // Wait for the thinking process to complete
-      // Each step takes 5 seconds, and we have 8 steps per prompt type
-      // Add 2 seconds buffer at the end
-      const thinkingTime = 8 * 5000 + 2000; // 42 seconds total
-      
+      const thinkingTime = 8 * 5000 + 2000;
       await new Promise((resolve) => setTimeout(resolve, thinkingTime));
-      
-      // The final response is now available from the thinking process
+
       if (finalResponse) {
-        // Wait a bit longer to ensure the user has time to read the preliminary responses
         await new Promise((resolve) => setTimeout(resolve, 2000));
-        
         const aiMessage: Message = {
           id: (messages.length + 2).toString(),
           role: "assistant",
@@ -86,17 +76,11 @@ export default function ChatInterface() {
         messages={messages}
         onSendMessage={handleSendMessage}
         isLoading={isLoading}
+        isThinking={isThinking}
+        thinkingSteps={thinkingSteps}
+        currentStep={currentStep}
+        finalResponse={finalResponse}
       />
-      {(isThinking || finalResponse) && (
-        <div className="fixed bottom-24 left-0 right-0 z-10 px-4 pb-4">
-          <ThinkingProcess 
-            isThinking={isThinking}
-            thinkingSteps={thinkingSteps}
-            currentStep={currentStep}
-            finalResponse={finalResponse}
-          />
-        </div>
-      )}
     </div>
   );
 }
