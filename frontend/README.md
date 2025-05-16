@@ -1,37 +1,24 @@
-# Website Frontend Documentation
+# DiaBeatThis Frontend
 
-This is the **Dia Beat This Hackaton** website repository project for the tech community.
+This is the frontend application for the **DiaBeatThis** diabetes management platform.
 
 ---
 
 ## 📌 Table of Contents
 
-- [Website Frontend Documentation](#website-frontend-documentation)
+- [DiaBeatThis Frontend](#diabeathis-frontend)
   - [📌 Table of Contents](#-table-of-contents)
   - [🛠 Tech Stack](#-tech-stack)
   - [🚀 Getting Started](#-getting-started)
     - [Prerequisites](#prerequisites)
+    - [Setup Instructions](#setup-instructions)
   - [💁 Project Structure](#-project-structure)
-  <!-- - [Issue & Project Workflow](#issue--project-workflow)
-    - [1. Find an Issue](#1-find-an-issue)
-    - [2. Create a Branch](#2-create-a-branch)
-    - [3. Submit a Pull Request (PR)](#3-submit-a-pull-request-pr)
-    - [4. Code Review & Merge](#4-code-review--merge)
-  - [Branching & Git Workflow](#branching--git-workflow)
-    - [Branch Naming Convention](#branch-naming-convention)
-      - [1. Switch to develop branch](#1-switch-to-develop-branch)
-      - [2. Create a feature branch linked to an issue](#2-create-a-feature-branch-linked-to-an-issue)
-      - [3. Make your changes in the code](#3-make-your-changes-in-the-code)
-      - [4. Once you're done with your changes, commit](#4-once-youre-done-with-your-changes-commit)
-      - [5. Push to remote branch](#5-push-to-remote-branch)
-      - [6. Create a pull request (PR)](#6-create-a-pull-request-pr)
-  - [Commit Message Guidelines](#commit-message-guidelines)
-    - [Commit Message Format](#commit-message-format)
-    - [Allowed Commit Types](#allowed-commit-types)
-      - [Examples](#examples)
-  - [📋 Pull Request Guidelines](#-pull-request-guidelines)
-    - [PR Title Format:](#pr-title-format)
-    - [PR Description Template](#pr-description-template) -->
+  - [📱 Key Features](#-key-features)
+  - [🧩 Component Library](#-component-library)
+  - [🔄 State Management](#-state-management)
+  - [📡 API Integration](#-api-integration)
+  - [🧪 Testing](#-testing)
+  - [📦 Build and Deployment](#-build-and-deployment)
 
 ---
 
@@ -99,99 +86,97 @@ Open [http://localhost:5173](http://localhost:5173) with your browser to see the
 ## 💁 Project Structure
 
 ```
-📦 TEAM-SPARKY-TRIO-2025
-├── 📂 backend                      # Backend server code (e.g., API routes, database config)
-│
-├── 📂 frontend                     # Frontend application built with React + TypeScript
-│   ├── 📂 node\_modules             # Project dependencies
-│   ├── 📂 public                   # Static assets (favicon, index.html, main logo, etc.)
-│   ├── 📂 src                      # Source code
-│   │   ├── 📂 assets               # Images, icons, and other static assets
-│   │   ├── 📂 components           # Reusable UI components
-│   │   │   ├── 📂 ui               # Generic UI components from shadcnUI or similar
-│   │   ├── 📂 lib                  # Utility functions and libraries
-│   │   ├── 📂 hooks                # Custom React hooks (e.g., for data fetching)
-│   │   ├── App.tsx                # Main application component
-│   │   └── index.tsx              # React app entry point
-│   ├── index.css                  # Global CSS file for consistent styling
-│   ├── package.json               # Frontend dependencies and scripts
-│   ├── tsconfig.json              # TypeScript configuration
-│   └── .gitignore                 # Files and folders to be ignored by Git
-│
-└── README.md                      # Project documentation and setup instructions
+📦 frontend
+├── 📂 node_modules             # Project dependencies
+├── 📂 public                   # Static assets (favicon, index.html, main logo, etc.)
+├── 📂 src                      # Source code
+│   ├── 📂 assets               # Images, icons, and other static assets
+│   ├── 📂 components           # Reusable UI components
+│   │   ├── 📂 ui               # Generic UI components from shadcnUI or similar
+│   │   ├── 📂 dashboard        # Dashboard-specific components
+│   │   ├── 📂 auth             # Authentication-related components
+│   │   ├── 📂 health           # Health tracking components
+│   │   └── 📂 layout           # Layout components (header, footer, etc.)
+│   ├── 📂 lib                  # Utility functions and libraries
+│   ├── 📂 hooks                # Custom React hooks (e.g., for data fetching)
+│   ├── 📂 pages                # Page components for each route
+│   ├── 📂 services             # API service functions
+│   ├── 📂 store                # State management
+│   ├── 📂 types                # TypeScript type definitions
+│   ├── App.tsx                 # Main application component
+│   └── index.tsx               # React app entry point
+├── 📂 tests                    # Test files
+├── index.html                  # HTML entry point
+├── tailwind.config.js          # Tailwind CSS configuration
+├── tsconfig.json               # TypeScript configuration
+└── package.json                # Project dependencies and scripts
 ```
 
----
+## 📱 Key Features
 
-<!-- ## Issue & Project Workflow
+The frontend application provides the following key features:
 
-We use **GitHub Projects** to manage tasks and issues. Follow these steps when working on issues:
+- **User Authentication**: Secure login, registration, and profile management
+- **Dashboard**: Overview of health metrics and recent activities
+- **Glucose Tracking**: Log and visualize glucose readings
+- **Medication Management**: Track medications and set reminders
+- **Meal Planning**: Create and manage meal plans with nutritional information
+- **Exercise Tracking**: Log workouts and physical activities
+- **Reports**: Generate health reports and insights
+- **Agent Chat Interface**: Interact with the Debie AI agent for personalized guidance
 
-#### 1. Find an Issue
+## 🧩 Component Library
 
-- Go to the [GitHub Issues](https://github.com/GenAIPHBuilders-org/team-Sparky-Trio-2025/issues) page.
-- Assign the issue to yourself.
-- Move the issue to "In Progress" in the project board.
+We use ShadcnUI components as the foundation for our UI. These components are located in the `src/components/ui` directory. When creating new components:
 
-#### 2. Create a Branch
+1. Follow the established naming conventions
+2. Ensure components are properly typed with TypeScript
+3. Create reusable components that can be composed together
+4. Document component props and usage
 
-- Use the [branching convention](#branching--git-workflow).
-- Start coding!
+## 🔄 State Management
 
-#### 3. Submit a Pull Request (PR)
+The application uses a combination of React Context and local component state for state management:
 
-- Reference the issue in the PR description (e.g., `Closes #123`).
-- Move the issue to "Review" in the project board.
+- **Authentication State**: Managed through AuthContext
+- **User Preferences**: Stored in UserPreferencesContext
+- **Health Data**: Managed through dedicated contexts or hooks
+- **UI State**: Handled with local component state
 
-#### 4. Code Review & Merge
+## 📡 API Integration
 
-- Once approved, the PR gets merged into `develop`.
-- The issue is moved to "Done."
+API integration is handled through service functions in the `src/services` directory:
 
----
+- **API Client**: Base configuration for API requests
+- **Authentication Service**: Login, registration, and token management
+- **Health Data Service**: CRUD operations for health metrics
+- **Agent Service**: Communication with the Debie AI agent
 
-## Branching & Git Workflow
+## 🧪 Testing
 
-### Branch Naming Convention
+Run tests with:
 
-| Branch Type | Naming Convention               | Example                 |
-| ----------- | ------------------------------- | ----------------------- |
-| **Main**    | `main`                          | `main`                  |
-| **Dev**     | `dev`                           | `dev`                   |
-| **Feature** | `feature/ISSUE-ID-feature-name` | `feature/123-add-auth`  |
-| **Bugfix**  | `bugfix/ISSUE-ID-issue-name`    | `bugfix/234-fix-footer` |
-
----
-
-## 📋 Pull Request Guidelines
-
-### PR Title Format:
-
-```
-<type>(<scope>): <short description>
+```bash
+npm test
 ```
 
-Example:
+We use the following testing tools:
+- Jest for unit tests
+- React Testing Library for component tests
+- Cypress for end-to-end tests
 
+## 📦 Build and Deployment
+
+Build the application for production:
+
+```bash
+npm run build
 ```
-feat(auth): add user login functionality
-fix(navbar): resolve mobile responsiveness issue
+
+The build artifacts will be stored in the `dist/` directory.
+
+Preview the production build locally:
+
+```bash
+npm run preview
 ```
-
-### PR Description Template
-
-```
-✨ What’s New?
-- [x] Briefly explain what was added
-
-📷 Screenshots of website (IMPORTANT)
-_Add relevant screenshots/gifs_
-
-🔗 Related Issues
-Closes #ISSUE_NUMBER
-
-✅ Checklist (from issue)
-- [ ] Code follows project conventions
-- [ ] Linted & formatted
-- [ ] Tested locally
-``` -->
