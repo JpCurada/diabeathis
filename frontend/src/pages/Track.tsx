@@ -144,7 +144,7 @@ export default function TrackPage() {
 
   return (
     <div className="container px-4 py-6 max-w-7xl mx-auto">
-      <Header title="Track" />
+      <Header name="Track" />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
